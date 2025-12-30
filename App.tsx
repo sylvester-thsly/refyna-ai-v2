@@ -565,6 +565,19 @@ const App = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
 
+    // Simple HTML escape function to prevent XSS
+    const escapeHtml = (text: string) => {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    };
+
+    const safeName = escapeHtml(userProfile?.name || 'User');
+    const safeDate = escapeHtml(new Date().toLocaleString());
+
     const content = `
       <html>
         <head>
@@ -586,7 +599,7 @@ const App = () => {
         </head>
         <body>
           <h1>Refyna Design Audit Report</h1>
-          <div class="meta">Generated for ${userProfile?.name || 'User'} on ${new Date().toLocaleString()}</div>
+          <div class="meta">Generated for ${safeName} on ${safeDate}</div>
 
           ${imageSource ? `
             <div class="preview-container">
@@ -599,8 +612,8 @@ const App = () => {
             <div class="annotation-list">
               ${annotations.map((a, i) => `
                 <div class="annotation-item">
-                  <strong>${i + 1}. ${a.label}</strong><br/>
-                  ${a.suggestion}
+                  <strong>${i + 1}. ${escapeHtml(a.label)}</strong><br/>
+                  ${escapeHtml(a.suggestion)}
                 </div>
               `).join('')}
             </div>
@@ -610,8 +623,8 @@ const App = () => {
             <h3>Detailed AI Analysis</h3>
             ${chatHistory.map(msg => `
               <div class="message ${msg.role}">
-                <div class="role">${msg.role === 'model' ? 'Refyna AI' : (userProfile?.name || 'Designer')}</div>
-                <div>${msg.text.replace(/\n/g, '<br/>')}</div>
+                <div class="role">${msg.role === 'model' ? 'Refyna AI' : safeName}</div>
+                <div>${escapeHtml(msg.text).replace(/\n/g, '<br/>')}</div>
               </div>
             `).join('')}
           </div>

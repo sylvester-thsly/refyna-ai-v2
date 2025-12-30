@@ -59,6 +59,7 @@ const App = () => {
   const [voiceName, setVoiceName] = useState('Fenrir'); // Default voice
   const [imageZoom, setImageZoom] = useState(100); // Zoom level
   const [activeModelName, setActiveModelName] = useState('gemini-2.5-flash'); // Smart Switch Display
+  const [mobileReviewView, setMobileReviewView] = useState<'chat' | 'preview'>('chat'); // Mobile Tab Switcher
 
   // History & Memory State
   const [sessions, setSessions] = useState<ReviewSession[]>([]);
@@ -977,9 +978,25 @@ const App = () => {
   );
 
   const renderReview = () => (
-    <div className="flex h-screen overflow-hidden bg-white dark:bg-slate-900 relative z-10 animate-fade-in">
+    <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-white dark:bg-slate-900 relative z-10 animate-fade-in">
+      {/* Mobile Tab Switcher */}
+      <div className="md:hidden flex border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 z-50 flex-shrink-0">
+        <button
+          onClick={() => setMobileReviewView('chat')}
+          className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${mobileReviewView === 'chat' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-slate-500 dark:text-slate-400'}`}
+        >
+          Chat & Analysis
+        </button>
+        <button
+          onClick={() => setMobileReviewView('preview')}
+          className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${mobileReviewView === 'preview' ? 'border-pink-500 text-pink-600 dark:text-pink-400' : 'border-transparent text-slate-500 dark:text-slate-400'}`}
+        >
+          Preview ({annotations.length})
+        </button>
+      </div>
+
       {/* Left: AI Interaction */}
-      <div className="w-full lg:w-[400px] flex flex-col border-r border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 relative z-20 shadow-sm">
+      <div className={`w-full lg:w-[400px] flex-col border-r border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 relative z-20 shadow-sm ${mobileReviewView === 'chat' ? 'flex' : 'hidden md:flex'}`}>
         <div className="p-6 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-white/80 dark:bg-slate-900/80 backdrop-blur z-10">
           <h3 className="font-medium text-slate-900 dark:text-white flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900 dark:to-cyan-900 flex items-center justify-center text-blue-500 dark:text-blue-300">
@@ -1104,7 +1121,7 @@ const App = () => {
       </div>
 
       {/* Right: Design Preview */}
-      <div className="flex-1 bg-[#FAFAFA] dark:bg-[#0B1120] relative flex flex-col overflow-hidden">
+      <div className={`flex-1 bg-[#FAFAFA] dark:bg-[#0B1120] relative flex-col overflow-hidden ${mobileReviewView === 'preview' ? 'flex' : 'hidden md:flex'}`}>
 
         {/* Vibrant Aurora Background Effect */}
         {isAnalyzing && (
@@ -1162,7 +1179,7 @@ const App = () => {
                           width: `${ann.box_2d[3] - ann.box_2d[1]}%`
                         }}
                       >
-                        <div className="absolute -top-3 -left-3 w-6 h-6 bg-pink-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg scale-0 group-hover:scale-100 transition-transform duration-300">
+                        <div className="absolute -top-3 -left-3 w-6 h-6 bg-pink-500 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg scale-100 transition-transform duration-300 z-10">
                           {idx + 1}
                         </div>
                         <div className="absolute opacity-0 group-hover:opacity-100 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs p-4 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-full w-64 z-20 transition-all duration-300 pointer-events-auto">

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Screen, DesignToken, ImageSize, Annotation, ChatMessage, ReviewSession, UserProfile, UserFeedback } from './types';
 import { Sidebar } from './components/Sidebar';
+import { MobileNav } from './components/MobileNav';
 import { ModernCard, Button, Input, FeedbackButtons, ComparisonView } from './components/UIComponents';
 import { DesignDojo } from './components/DesignDojo';
 import { analyzeDesignToken, generateDesignVariant, analyzeImage, getQuickSuggestion, createChatSession, generateAdvancedVariant, getActiveModel } from './services/geminiService';
@@ -719,12 +720,12 @@ const App = () => {
   );
 
   const renderDashboard = () => (
-    <div className="max-w-6xl mx-auto pt-24 px-8 relative animate-fade-in">
-      <header className="mb-20">
-        <h1 className="text-[4.5rem] leading-[1.1] tracking-tight font-medium mb-4 dark:text-white">
+    <div className="max-w-6xl mx-auto pt-10 px-4 md:pt-24 md:px-8 relative animate-fade-in pb-8">
+      <header className="mb-10 md:mb-20">
+        <h1 className="text-4xl md:text-[4.5rem] leading-tight md:leading-[1.1] tracking-tight font-medium mb-2 md:mb-4 dark:text-white">
           <span className="text-gradient-primary">Hello, {userProfile?.name || 'Designer'}</span>
         </h1>
-        <p className="text-3xl text-slate-500 dark:text-slate-400 font-light">How can I assist you today?</p>
+        <p className="text-xl md:text-3xl text-slate-500 dark:text-slate-400 font-light">How can I assist you today?</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -756,10 +757,10 @@ const App = () => {
   );
 
   const renderHistory = () => (
-    <div className="max-w-6xl mx-auto pt-20 px-8 pb-12 relative z-10 animate-fade-in">
-      <header className="mb-16">
-        <h1 className="text-4xl font-medium text-slate-900 dark:text-white mb-2">Design History</h1>
-        <p className="text-slate-500 dark:text-slate-400 font-normal text-lg">Your past design reviews and audits.</p>
+    <div className="max-w-6xl mx-auto pt-10 px-4 md:pt-20 md:px-8 pb-12 relative z-10 animate-fade-in">
+      <header className="mb-8 md:mb-16">
+        <h1 className="text-3xl md:text-4xl font-medium text-slate-900 dark:text-white mb-2">Design History</h1>
+        <p className="text-slate-500 dark:text-slate-400 font-normal text-base md:text-lg">Your past design reviews and audits.</p>
       </header>
 
       {sessions.length === 0 ? (
@@ -805,8 +806,8 @@ const App = () => {
   );
 
   const renderTokenInput = () => (
-    <div className="max-w-4xl mx-auto pt-20 px-8 h-[calc(100vh-4rem)] flex flex-col justify-center relative z-10 animate-fade-in">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div className="max-w-4xl mx-auto pt-10 px-4 md:pt-20 md:px-8 min-h-[calc(100vh-8rem)] md:h-[calc(100vh-4rem)] flex flex-col justify-center relative z-10 animate-fade-in pb-20 md:pb-0">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
         <div className="order-2 lg:order-1">
           <div className="bg-white dark:bg-slate-800 rounded-[40px] p-10 shadow-xl shadow-purple-100/50 dark:shadow-none border border-slate-100 dark:border-slate-700 relative overflow-hidden">
             <div className="relative z-10">
@@ -860,8 +861,8 @@ const App = () => {
   );
 
   const renderSettings = () => (
-    <div className="max-w-2xl mx-auto pt-20 px-8 pb-12 relative z-10 animate-fade-in">
-      <header className="mb-12">
+    <div className="max-w-2xl mx-auto pt-10 px-4 md:pt-20 md:px-8 pb-32 md:pb-12 relative z-10 animate-fade-in">
+      <header className="mb-8 md:mb-12">
         <h1 className="text-4xl font-medium text-slate-900 dark:text-white mb-2">Settings</h1>
         <p className="text-slate-500 dark:text-slate-400 font-normal text-lg">Manage your preferences and account.</p>
       </header>
@@ -1262,7 +1263,7 @@ const App = () => {
         ) : screen === Screen.ONBOARDING ? (
           renderOnboarding()
         ) : (
-          <div className="flex-1 overflow-y-auto scrollbar-hide">
+          <div className="flex-1 overflow-y-auto scrollbar-hide pb-20 md:pb-0">
             {screen === Screen.DASHBOARD && renderDashboard()}
             {screen === Screen.TOKEN_INPUT && renderTokenInput()}
             {screen === Screen.HISTORY && renderHistory()}
@@ -1270,6 +1271,14 @@ const App = () => {
           </div>
         )}
       </main>
+
+      {/* Mobile Navigation - Only shows on mobile */}
+      {screen !== Screen.ONBOARDING && (
+        <MobileNav
+          currentScreen={screen}
+          onNavigate={handleNavigate}
+        />
+      )}
     </div>
   );
 };

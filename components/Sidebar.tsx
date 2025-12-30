@@ -8,6 +8,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentScreen, onNavigate, onProfileClick }) => {
+
   const navItems = [
     { id: Screen.DASHBOARD, icon: 'dashboard', label: 'Home' },
     { id: Screen.REVIEW, icon: 'rate_review', label: 'Review' },
@@ -17,7 +18,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentScreen, onNavigate, onP
   ];
 
   return (
-    <div className="w-20 lg:w-24 h-screen bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 flex flex-col sticky top-0 z-50 items-center py-8 transition-colors duration-300">
+    <div className="hidden md:flex w-20 lg:w-24 h-screen bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 flex-col sticky top-0 z-50 items-center py-8 transition-colors duration-300">
       <div className="mb-12 flex flex-col items-center gap-2">
         <div
           onClick={() => onNavigate(Screen.DASHBOARD)}

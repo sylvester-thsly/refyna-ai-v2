@@ -393,37 +393,37 @@ export const DesignDojo: React.FC<DesignDojoProps> = ({ onBack, onSelectCategory
             const question = safeQuestions[currentIndex] || safeQuestions[0];
 
             return (
-                <div className="min-h-screen flex items-center justify-center px-4 py-12 relative z-10">
+                <div className="min-h-screen flex items-center justify-center px-4 py-4 md:py-12 pb-20 md:pb-12 relative z-10">
                     <div className="w-full max-w-2xl">
                         {/* Brutalist Header */}
-                        <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center justify-between mb-4 md:mb-6 gap-2">
                             <button
                                 onClick={() => setQuizMode('setup')}
-                                className="w-12 h-12 bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center font-bold text-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors"
+                                className="w-10 h-10 md:w-12 md:h-12 bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center font-bold text-lg md:text-xl hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors flex-shrink-0"
                             >
                                 ✕
                             </button>
 
                             {/* Timer for Blitz Mode */}
                             {config.type === 'Blitz' && (
-                                <div className={`px-6 py-3 font-mono text-2xl font-black border-4 ${timeLeft > 10
-                                        ? 'bg-green-50 dark:bg-green-900/20 border-green-500 text-green-700 dark:text-green-400'
-                                        : timeLeft > 5
-                                            ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500 text-yellow-700 dark:text-yellow-400'
-                                            : 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-400 animate-pulse'
+                                <div className={`px-3 py-2 md:px-6 md:py-3 font-mono text-lg md:text-2xl font-black border-2 md:border-4 ${timeLeft > 10
+                                    ? 'bg-green-50 dark:bg-green-900/20 border-green-500 text-green-700 dark:text-green-400'
+                                    : timeLeft > 5
+                                        ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500 text-yellow-700 dark:text-yellow-400'
+                                        : 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-700 dark:text-red-400 animate-pulse'
                                     }`}>
                                     ⏱ {timeLeft}s
                                 </div>
                             )}
 
-                            <div className="font-mono text-sm font-bold">
+                            <div className="font-mono text-xs md:text-sm font-bold">
                                 <span className="text-slate-900 dark:text-white">{currentIndex + 1}</span>
                                 <span className="text-slate-400 dark:text-slate-500"> / {safeQuestions.length}</span>
                             </div>
                         </div>
 
                         {/* Progress Bar */}
-                        <div className="h-3 bg-slate-200 dark:bg-slate-700 mb-8">
+                        <div className="h-2 md:h-3 bg-slate-200 dark:bg-slate-700 mb-4 md:mb-8">
                             <div
                                 className="h-full bg-slate-900 dark:bg-white transition-all duration-500"
                                 style={{ width: `${((currentIndex + 1) / safeQuestions.length) * 100}%` }}
@@ -431,11 +431,11 @@ export const DesignDojo: React.FC<DesignDojoProps> = ({ onBack, onSelectCategory
                         </div>
 
                         {/* Question Block */}
-                        <div className="bg-white dark:bg-slate-800 border-4 border-slate-900 dark:border-white p-8 mb-6">
-                            <div className="font-mono text-xs uppercase tracking-widest text-slate-600 dark:text-slate-400 mb-4">
+                        <div className="bg-white dark:bg-slate-800 border-2 md:border-4 border-slate-900 dark:border-white p-4 md:p-8 mb-4 md:mb-6">
+                            <div className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-slate-600 dark:text-slate-400 mb-3 md:mb-4">
                                 {category?.title} — {config.level}
                             </div>
-                            <h2 className="text-3xl font-black text-slate-900 dark:text-white leading-tight">
+                            <h2 className="text-xl md:text-3xl font-black text-slate-900 dark:text-white leading-tight">
                                 {question.question}
                             </h2>
                         </div>
@@ -472,7 +472,7 @@ export const DesignDojo: React.FC<DesignDojoProps> = ({ onBack, onSelectCategory
                                         key={`option-${idx}-${currentIndex}`}
                                         onClick={() => handleOptionClick(idx)}
                                         disabled={showResult}
-                                        className={`w-full text-left p-5 border-2 transition-all duration-200 flex items-center gap-4 ${bgClass} ${borderClass} ${!showResult ? 'hover:border-slate-900 dark:hover:border-white cursor-pointer' : 'cursor-default'}`}
+                                        className={`w-full text-left p-3 md:p-5 border-2 transition-all duration-200 flex items-center gap-3 md:gap-4 min-h-[44px] ${bgClass} ${borderClass} ${!showResult ? 'hover:border-slate-900 dark:hover:border-white cursor-pointer active:scale-[0.98]' : 'cursor-default'}`}
                                     >
                                         <div className={`w-10 h-10 flex items-center justify-center flex-shrink-0 font-black text-lg border-2 ${showResult && isCorrect
                                             ? 'border-white dark:border-slate-900 text-white dark:text-slate-900'

@@ -996,7 +996,7 @@ const App = () => {
       </div>
 
       {/* Left: AI Interaction */}
-      <div className={`w-full lg:w-[400px] flex-col border-r border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 relative z-20 shadow-sm ${mobileReviewView === 'chat' ? 'flex' : 'hidden md:flex'}`}>
+      <div className={`w-full lg:w-[400px] border-r border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 relative z-20 shadow-sm ${mobileReviewView === 'chat' ? 'flex flex-col' : 'hidden md:flex md:flex-col'}`}>
         <div className="p-6 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-white/80 dark:bg-slate-900/80 backdrop-blur z-10">
           <h3 className="font-medium text-slate-900 dark:text-white flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900 dark:to-cyan-900 flex items-center justify-center text-blue-500 dark:text-blue-300">
@@ -1121,7 +1121,7 @@ const App = () => {
       </div>
 
       {/* Right: Design Preview */}
-      <div className={`flex-1 bg-[#FAFAFA] dark:bg-[#0B1120] relative flex-col overflow-hidden ${mobileReviewView === 'preview' ? 'flex' : 'hidden md:flex'}`}>
+      <div className={`flex-1 bg-[#FAFAFA] dark:bg-[#0B1120] relative overflow-hidden ${mobileReviewView === 'preview' ? 'flex flex-col' : 'hidden md:flex md:flex-col'}`}>
 
         {/* Vibrant Aurora Background Effect */}
         {isAnalyzing && (
